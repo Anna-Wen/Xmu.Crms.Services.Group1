@@ -153,7 +153,8 @@ namespace Xmu.Crms.Services.Group1
                 _db.Attach(topic);
                 _db.Topic.Add(topic);
                 _db.SaveChanges();
-                return topic.Id;
+                long id = topic.Id;
+                return id;
             }
             catch (System.Exception e)
             {
