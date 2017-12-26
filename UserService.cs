@@ -139,10 +139,16 @@ namespace Xmu.Crms.Services.Group1
 
         public IList<UserInfo> ListUserByClassId(long classId, string numBeginWith, string nameBeginWith)
         {
-            if (classId.GetType() != typeof(long) || numBeginWith.GetType() != typeof(string) || nameBeginWith.GetType() != typeof(string)) throw new ArgumentException();
-            IList<UserInfo> StudentInfoList = _userDao.ListUserByClassId(classId, numBeginWith, nameBeginWith);
-            if (StudentInfoList == null) throw new ClassNotFoundException();
-            return StudentInfoList;
+            try
+            {
+                if (classId.GetType() != typeof(long) || classId < 0/* || numBeginWith.GetType() != typeof(string) || nameBeginWith.GetType() != typeof(string)*/) throw new ArgumentException();
+                IList<UserInfo> StudentInfoList = _userDao.ListUserByClassId(classId, numBeginWith, nameBeginWith);
+                if (StudentInfoList == null) throw new ClassNotFoundException();
+                return StudentInfoList;
+            }catch
+            {
+                throw;
+            }
             //throw new NotImplementedException();
         }
 
