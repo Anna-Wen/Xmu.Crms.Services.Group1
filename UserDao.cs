@@ -115,6 +115,7 @@ namespace Xmu.Crms.Services.Group1
             {
                 try
                 {
+                    School school = _db.School.Where(u => u.Name == newUserInfo.School.Name).SingleOrDefault();
                     UserInfo userInfo = _db.UserInfo.First(u => u.Id == userId);
                     if (userInfo == null) throw new UserNotFoundException();
                     //用修改后的值给修改前的值赋值
@@ -126,7 +127,7 @@ namespace Xmu.Crms.Services.Group1
                     userInfo.Number = newUserInfo.Number;
                     userInfo.Password = newUserInfo.Password;
                     userInfo.Phone = newUserInfo.Phone;
-                    userInfo.School = newUserInfo.School;
+                    userInfo.School = school;
                     userInfo.Title = newUserInfo.Title;
                     userInfo.Type = newUserInfo.Type;
                     _db.Entry(userInfo).State = EntityState.Modified;
