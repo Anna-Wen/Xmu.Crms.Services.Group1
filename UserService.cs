@@ -39,6 +39,11 @@ namespace Xmu.Crms.Services.Group1
             }            
         }
 
+        public UserInfo GetUserByUserNumber(string number)
+        {
+            return _userDao.GetByNumber(number);
+        }
+
         // InsertAttendanceById中用到的方法
         private static double rad(double d)
         {
