@@ -14,7 +14,7 @@ using Xmu.Crms.Shared.Models;
 
 namespace Xmu.Crms.Services.Group1
 {
-    class UserDao:IUserDao
+    class UserDao : IUserDao
     {
         private readonly CrmsContext _db;
 
@@ -26,7 +26,7 @@ namespace Xmu.Crms.Services.Group1
         //通过Id查找用户
         public UserInfo Find(long userId)
         {
-            UserInfo userInfo = _db.UserInfo.Include(u=>u.School).FirstOrDefault(u => u.Id == userId);
+            UserInfo userInfo = _db.UserInfo.Include(u => u.School).FirstOrDefault(u => u.Id == userId);
             if (userInfo == null) throw new UserNotFoundException();
             return userInfo;
         }
@@ -40,16 +40,16 @@ namespace Xmu.Crms.Services.Group1
         //根据班级号和讨论课号查找出勤记录
         public IList<Attendance> FindAttendanceById(long seminarId, long classId)
         {
-            List<Attendance> list =  _db.Attendences.Include(a=>a.Student).Where(s => s.ClassInfo.Id == classId && s.Seminar.Id == seminarId).ToList<Attendance>();
+            List<Attendance> list = _db.Attendences.Include(a => a.Student).Where(s => s.ClassInfo.Id == classId && s.Seminar.Id == seminarId).ToList<Attendance>();
             return list;
         }
 
-       
+
         //根据班级号和讨论课号查找迟到学生
         public IList<UserInfo> FindLateStudents(long seminarId, long classId)
         {
-            List<UserInfo> list = (from s in _db.Attendences.Where(s => s.ClassInfo.Id == classId && s.Seminar.Id == seminarId && s.AttendanceStatus== AttendanceStatus.Late)
-                                  select s.Student).ToList<UserInfo>();
+            List<UserInfo> list = (from s in _db.Attendences.Where(s => s.ClassInfo.Id == classId && s.Seminar.Id == seminarId && s.AttendanceStatus == AttendanceStatus.Late)
+                                   select s.Student).ToList<UserInfo>();
             return list;
         }
         //根据班级号和讨论课号查找老师位置
@@ -73,7 +73,7 @@ namespace Xmu.Crms.Services.Group1
                     _db.Attendences.Add(attendance);
                     _db.SaveChanges();
                 }
-                catch(System.Exception e)
+                catch (System.Exception e)
                 {
                     scope.Rollback();
                     throw e;
@@ -113,33 +113,33 @@ namespace Xmu.Crms.Services.Group1
         {
             //using (var scope = _db.Database.BeginTransaction())
             //{
-                //try
-                //{
-                    UserInfo userInfo = _db.UserInfo.SingleOrDefault(u => u.Id == userId);
-                    if (userInfo == null) throw new UserNotFoundException();
-                    //用修改后的值给修改前的值赋值
-                    //userInfo.Avatar = newUserInfo.Avatar;
-                    if(newUserInfo.Education==null)
-                        userInfo.Education = newUserInfo.Education;
-                    userInfo.Email = newUserInfo.Email;
-                    userInfo.Gender = newUserInfo.Gender;
-                    userInfo.Name = newUserInfo.Name;
-                    School school = _db.School.Where(s => s.Name == newUserInfo.School.Name).FirstOrDefault();
-                    userInfo.School = school ?? throw new Exception("SchoolNotFound");
-                    userInfo.Number = newUserInfo.Number;
-                    userInfo.Phone = newUserInfo.Phone;
-                    if (newUserInfo.Title == null)
-                        userInfo.Title = newUserInfo.Title;
-                    _db.Entry(userInfo).State = EntityState.Modified;
-                    _db.SaveChanges();
-                //}
-                //catch(System.Exception e)
-                //{
-                //    scope.Rollback();
-                //    throw e;
-                //}
+            //try
+            //{
+            UserInfo userInfo = _db.UserInfo.SingleOrDefault(u => u.Id == userId);
+            if (userInfo == null) throw new UserNotFoundException();
+            //用修改后的值给修改前的值赋值
+            //userInfo.Avatar = newUserInfo.Avatar;
+            if (newUserInfo.Education == null)
+                userInfo.Education = newUserInfo.Education;
+            userInfo.Email = newUserInfo.Email;
+            userInfo.Gender = newUserInfo.Gender;
+            userInfo.Name = newUserInfo.Name;
+            School school = _db.School.Where(s => s.Name == newUserInfo.School.Name).FirstOrDefault();
+            userInfo.School = school ?? throw new Exception("SchoolNotFound");
+            userInfo.Number = newUserInfo.Number;
+            userInfo.Phone = newUserInfo.Phone;
+            if (newUserInfo.Title == null)
+                userInfo.Title = newUserInfo.Title;
+            _db.Entry(userInfo).State = EntityState.Modified;
+            _db.SaveChanges();
             //}
-            
+            //catch(System.Exception e)
+            //{
+            //    scope.Rollback();
+            //    throw e;
+            //}
+            //}
+
         }
         public UserInfo GetByNumber(string number)
         {
