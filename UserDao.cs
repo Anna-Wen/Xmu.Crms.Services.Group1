@@ -111,33 +111,34 @@ namespace Xmu.Crms.Services.Group1
 
         public void UpdateUserByUserId(long userId, UserInfo newUserInfo)
         {
-            using (var scope = _db.Database.BeginTransaction())
-            {
-                try
-                {
-                    UserInfo userInfo = _db.UserInfo.First(u => u.Id == userId);
+            //using (var scope = _db.Database.BeginTransaction())
+            //{
+                //try
+                //{
+                    UserInfo userInfo = _db.UserInfo.SingleOrDefault(u => u.Id == userId);
                     if (userInfo == null) throw new UserNotFoundException();
                     //用修改后的值给修改前的值赋值
-                    userInfo.Avatar = newUserInfo.Avatar;
-                    userInfo.Education = newUserInfo.Education;
+                    //userInfo.Avatar = newUserInfo.Avatar;
+                    if(newUserInfo.Education==null)
+                        userInfo.Education = newUserInfo.Education;
                     userInfo.Email = newUserInfo.Email;
                     userInfo.Gender = newUserInfo.Gender;
                     userInfo.Name = newUserInfo.Name;
+                    School school = _db.School.Where(s => s.Name == newUserInfo.School.Name).FirstOrDefault();
+                    userInfo.School = school ?? throw new Exception("SchoolNotFound");
                     userInfo.Number = newUserInfo.Number;
-                    userInfo.Password = newUserInfo.Password;
                     userInfo.Phone = newUserInfo.Phone;
-                    userInfo.School = newUserInfo.School;
-                    userInfo.Title = newUserInfo.Title;
-                    userInfo.Type = newUserInfo.Type;
+                    if (newUserInfo.Title == null)
+                        userInfo.Title = newUserInfo.Title;
                     _db.Entry(userInfo).State = EntityState.Modified;
                     _db.SaveChanges();
-                }
-                catch(System.Exception e)
-                {
-                    scope.Rollback();
-                    throw e;
-                }
-            }
+                //}
+                //catch(System.Exception e)
+                //{
+                //    scope.Rollback();
+                //    throw e;
+                //}
+            //}
             
         }
         public UserInfo GetByNumber(string number)

@@ -16,6 +16,7 @@ namespace Xmu.Crms.Services.Group1
     class UserService : IUserService
     {
         private readonly IUserDao _userDao;
+        private readonly ISchoolService _iSchoolService;
 
         public UserService(IUserDao userDao)
         {
@@ -167,8 +168,14 @@ namespace Xmu.Crms.Services.Group1
 
         public void UpdateUserByUserId(long userId, UserInfo user)
         {
-            if (userId.GetType() != typeof(long) || user.GetType() != typeof(UserInfo)) throw new ArgumentException();
-            _userDao.UpdateUserByUserId(userId, user);
+            try
+            {
+                if (userId.GetType() != typeof(long) || user.GetType() != typeof(UserInfo) || userId < 0) throw new ArgumentException();
+                _userDao.UpdateUserByUserId(userId, user);
+            }catch
+            {
+                throw;
+            }
 
         }
 

@@ -73,6 +73,11 @@ namespace Xmu.Crms.Services.Group1
             return list;
         }
 
-        
+        ////按照学校名查找学校
+        //public School getSchoolBySchoolName(string name)
+        //{
+        //    School school = _db.School.Where(s=>s.Name==name).FirstOrDefault();
+        //    return school;
+        //}
     }
 }

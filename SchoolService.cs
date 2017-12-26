@@ -59,5 +59,11 @@ namespace Xmu.Crms.Services.Group1
             IList<School> list = _schoolDao.FindAllByCity(city);
             return list;
         }
+
+        //public School getSchoolbySchoolName(string name)
+        //{
+        //    School school = _schoolDao.getSchoolBySchoolName(name);
+        //    return school;
+        //}
     }
 }

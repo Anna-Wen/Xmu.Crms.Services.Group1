@@ -22,5 +22,8 @@ namespace Xmu.Crms.Services.Group1.Dao
         //插入学校
         long AddSchool(School school);
 
+        ////按照学校名查找学校
+        //School getSchoolBySchoolName(string name);
+
     }
 }
