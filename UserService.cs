@@ -40,7 +40,14 @@ namespace Xmu.Crms.Services.Group1
 
         public UserInfo GetUserByUserNumber(string number)
         {
-            return _userDao.GetByNumber(number);
+            try
+            {
+                return _userDao.GetByNumber(number);
+            }
+            catch(UserNotFoundException)
+            {
+                throw;
+            }
         }
 
         // InsertAttendanceById中用到的方法
