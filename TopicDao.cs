@@ -148,21 +148,18 @@ namespace Xmu.Crms.Services.Group1
         {
             Seminar s = _db.Seminar.SingleOrDefault(c => c.Id == seminarId);
             topic.Seminar = s;
-            using (var scope = _db.Database.BeginTransaction())
+            try
             {
-                try
-                {
-                    _db.Topic.Add(topic);
-                    _db.SaveChanges();
-                    return topic.Id;
-                }
-                catch(System.Exception e)
-                {
-                    scope.Rollback();
-                    throw e;
-                }
+                _db.Attach(topic);
+                _db.Topic.Add(topic);
+                _db.SaveChanges();
+                return topic.Id;
             }
-        }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+        }   
 
 
 

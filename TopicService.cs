@@ -80,6 +80,7 @@ namespace Xmu.Crms.Services.Group1
             try
             {
                 s = _topicDao.FindSeminar(seminarId);  //该门讨论课存在
+                topic.Seminar = s;
                 result = _topicDao.Insert(seminarId, topic);
             }catch(SeminarNotFoundException e) { throw e; }
             return result;
