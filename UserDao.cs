@@ -119,7 +119,7 @@ namespace Xmu.Crms.Services.Group1
             if (userInfo == null) throw new UserNotFoundException();
             //用修改后的值给修改前的值赋值
             //userInfo.Avatar = newUserInfo.Avatar;
-            if (newUserInfo.Education == null)
+            if (newUserInfo.Education != null)
                 userInfo.Education = newUserInfo.Education;
             userInfo.Email = newUserInfo.Email;
             userInfo.Gender = newUserInfo.Gender;
@@ -128,8 +128,10 @@ namespace Xmu.Crms.Services.Group1
             userInfo.School = school ?? throw new Exception("SchoolNotFound");
             userInfo.Number = newUserInfo.Number;
             userInfo.Phone = newUserInfo.Phone;
-            if (newUserInfo.Title == null)
+            if (newUserInfo.Title != null)
                 userInfo.Title = newUserInfo.Title;
+            if (newUserInfo.Type != null)
+                userInfo.Type = newUserInfo.Type;
             _db.Entry(userInfo).State = EntityState.Modified;
             _db.SaveChanges();
             //}

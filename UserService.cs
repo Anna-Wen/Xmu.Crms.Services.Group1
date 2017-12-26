@@ -16,7 +16,6 @@ namespace Xmu.Crms.Services.Group1
     class UserService : IUserService
     {
         private readonly IUserDao _userDao;
-        private readonly ISchoolService _iSchoolService;
 
         public UserService(IUserDao userDao)
         {
