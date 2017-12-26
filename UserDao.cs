@@ -84,7 +84,7 @@ namespace Xmu.Crms.Services.Group1
 
         public IList<UserInfo> ListUserByClassId(long classId, string numBeginWith, string nameBeginWith)
         {
-            List<CourseSelection> CourseSelectionList = _db.CourseSelection.Include(u => u.ClassInfo).Include(u => u.Student).Where(u => u.ClassInfo.Id == classId && u.Student.Number.StartsWith(numBeginWith) && u.Student.Name.StartsWith(nameBeginWith)).ToList<CourseSelection>();
+            List<CourseSelection> CourseSelectionList = _db.CourseSelection.Include(u => u.ClassInfo).Include(u => u.Student).ThenInclude(u=>u.School).Where(u => u.ClassInfo.Id == classId && u.Student.Number.StartsWith(numBeginWith) && u.Student.Name.StartsWith(nameBeginWith)).ToList<CourseSelection>();
             List<UserInfo> StudentInfoList = new List<UserInfo>();
             UserInfo tempUserInfo = new UserInfo();
             foreach (CourseSelection temp in CourseSelectionList)
