@@ -130,7 +130,7 @@ namespace Xmu.Crms.Services.Group1
             userInfo.Phone = newUserInfo.Phone;
             if (newUserInfo.Title != null)
                 userInfo.Title = newUserInfo.Title;
-            if (newUserInfo.Type == Shared.Models.Type.Unbinded)
+            if (userInfo.Type == Shared.Models.Type.Unbinded)
                 userInfo.Type = newUserInfo.Type;
             _db.Entry(userInfo).State = EntityState.Modified;
             _db.SaveChanges();
