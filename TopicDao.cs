@@ -153,7 +153,8 @@ namespace Xmu.Crms.Services.Group1
                 _db.Attach(topic);
                 _db.Topic.Add(topic);
                 _db.SaveChanges();
-                return topic.Id;
+                long id = topic.Id;
+                return id;
             }
             catch (System.Exception e)
             {
@@ -271,6 +272,7 @@ namespace Xmu.Crms.Services.Group1
         public List<SeminarGroupTopic> FindSeminarGroupTopicByGroupId(long id)
         {
             List<SeminarGroupTopic> list = _db.SeminarGroupTopic.Include(s => s.SeminarGroup).Include(u=>u.Topic).Where(s => s.SeminarGroup.Id == id).ToList<SeminarGroupTopic>();
+
             if (list == null) throw new SeminarNotFoundException();
             return list;
         }
